@@ -1,0 +1,46 @@
+#
+# run this as root, from this directory
+#
+# [nfs-pnfs00]
+# [nfs-ntdi07]
+# [cifs-ntdi08]
+#
+
+#
+# does commands can be run without risk..
+#
+# ansible nfs-pnfs00 -a "df -t nfs" -i nfs-cifs-hosts -k
+# ansible nfs-ntdi07 -a "df -t nfs" -i nfs-cifs-hosts -k
+# ansible cifs-ntdi08 -a "df -t cifs" -i nfs-cifs-hosts -k
+
+# does not give any output..
+# ansible-playbook nfs-check-pnfs00.yml -i ../nfs-cifs-hosts --list-hosts
+# ansible-playbook nfs-check-ntdi07.yml -i ../nfs-cifs-hosts --list-hosts
+#
+# better use:
+# (needs root.. only works with -b -K if executing user is defined on remote system)
+# ansible nfs-pnfs00 -a "df -t nfs" -i ../nfs-cifs-hosts  --limit dlx70 -k
+# ansible nfs-ntdi07 -a "df -t nfs" -i ../nfs-cifs-hosts  --limit dlx70 -k
+# to run on all
+#
+# ansible nfs-pnfs00 -a "df -t nfs" -i ../nfs-cifs-hosts -k
+# ansible nfs-ntdi07 -a "df -t nfs" -i ../nfs-cifs-hosts -k
+#
+# the work flow to change is:
+#
+# copy saved /etc/fstab back and remount fs
+# nfs-changeback-ntdi07.yml
+# nfs-changeback-pnfs00.yml
+# 
+# change mounts (save /etc/fstab, fix fstab entry unmount and mount NFS fs)
+# nfs-change-ntdi07.yml
+# nfs-change-pnfs00.yml
+# 
+# check NFS mounts with "df -t nfs", does not display output, use above cmd to check the mounts
+# nfs-check-ntdi07.yml
+# nfs-check-pnfs00.yml
+#
+# test NFS mounts, does umount and then mount with option -t nfs 
+# nfs-test-ntdi07.yml
+# nfs-test-pnfs00.yml
+#

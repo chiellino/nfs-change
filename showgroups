@@ -1,0 +1,1 @@
+grep "^\[.*\]$" nfs-cifs-hosts

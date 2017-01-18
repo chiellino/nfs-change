@@ -1,0 +1,6 @@
+---
+- hosts: nfs-pnfs00
+  remote_user: root
+  tasks:
+   - name: display all NFS mounts
+     command: df -t nfs

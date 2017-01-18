@@ -1,0 +1,22 @@
+
+#
+# /etc/fstab
+# Created by anaconda on Wed Feb 27 14:47:50 2013
+#
+# Accessible filesystems, by reference, are maintained under '/dev/disk'
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+#
+/dev/vg_lxdi80/lv_root          /               ext4    defaults        1 1
+UUID=f56f2b67-1cc2-4607-804d-073e43c9e4db /boot                   ext4    defaults        1 2
+tmpfs                   /dev/shm                tmpfs   defaults        0 0
+devpts                  /dev/pts                devpts  gid=5,mode=620  0 0
+sysfs                   /sys                    sysfs   defaults        0 0
+proc                    /proc                   proc    defaults        0 0
+nsdi07:/vol/ebl2013/Pbalaclu1  /opt/EBL2013/ACTIVEMQ   nfs    timeo=14,intr
+nsdi07:/vol/ebl2013/EBLdataP  /opt/EBL2013/DATEN  nfs    timeo=14,intr
+##nsdi07:/vol/ebl2013/YumRepo/EBL2013/Builds/Production /opt/EBL2013/RELEASE  nfs    timeo=14,intr
+##nsdi07:/vol/ebl2013/YumRepo/EBL2013/Builds/Fallback   /opt/EBL2013/FALLBACK  nfs    timeo=14,intr
+#lxdi00:/export/EBL2013/Pricefiles/wb/PROD  /opt/EBL2013/PRODUKTION/DATEN/FE/documents/wb/pcd  nfs4 timeo=14,intr
+pnfs00.sag.services:/export/warrepo/EBL2013/PROD /opt/EBL2013/RELEASE         nfs     timeo=14,intr
+pnfs00.sag.services:/export/warrepo/EBL2013/PRODFALLBACK /opt/EBL2013/FALLBACK         nfs     timeo=14,intr
+

@@ -1,0 +1,33 @@
+---
+- hosts: nfs-ntdi07
+  remote_user: root
+  tasks:
+   - name: copy ctrl-mnt to remote
+     copy:
+       src: ctrl-mnt.sh
+       dest: /tmp/ctrl-mnt.sh
+       owner: root
+       group: root
+       mode: 0744
+   - name: copy ch-mnt to remote
+     copy:
+       src: ch-mnt.sh
+       dest: /tmp/ch-mnt.sh
+       owner: root
+       group: root
+       mode: 0744
+   - name: copy /etc/fstab
+     command: "cp -p /etc/fstab /etc/fstab.bak-umb"
+   - name: fix nfs server names in fstab
+     command: "/tmp/ch-mnt.sh ntdi07"
+     register: fixed
+     notify: umount nfs mount
+  handlers:
+   - name: umount nfs mount
+     command: "/tmp/ctrl-mnt.sh off"
+     register: umount
+     notify: mount nfs mount
+     when: fixed.changed
+   - name: mount nfs mount
+     command: "/tmp/ctrl-mnt.sh on"
+     when: umount.changed

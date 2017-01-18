@@ -1,0 +1,24 @@
+---
+- hosts: nfs-pnfs00
+  remote_user: root
+  tasks:
+   - name: copy ctrl-mnt to remote
+     copy:
+       src: ctrl-mnt.sh
+       dest: /tmp/ctrl-mnt.sh
+       owner: root
+       group: root
+       mode: 0744
+   - name: copy /etc/fstab back
+     command: "cp -p /etc/fstab.bak-umb /etc/fstab"
+     register: fixed
+     notify: umount nfs mount
+  handlers:
+   - name: umount nfs mount
+     command: "/tmp/ctrl-mnt.sh off"
+     register: umount
+     notify: mount nfs mount
+     when: fixed.changed
+   - name: mount nfs mount
+     command: "/tmp/ctrl-mnt.sh on"
+     when: umount.changed
